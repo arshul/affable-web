@@ -1,0 +1,57 @@
+
+@media only screen and (min-width: 1200px){
+    .contain{
+        width: 723px;
+        margin-left: auto!important;
+        margin-right: auto!important;
+    }
+}
+@media only screen and (max-width: 991px) and (min-width: 768px){
+    .contain{
+        width: 723px;
+        margin-left: auto!important;
+        margin-right: auto!important;
+    }
+}
+@media only screen and (max-width: 767px){
+    .contain{
+        width: auto !important;
+        margin-left: auto!important;
+        margin-right: auto!important;
+    }
+}
+
+.pbu-20-plr-30{
+    padding: 1.5em 1em;
+}
+.bggrey{
+    background: #b5b3b3
+}
+.white-card {
+    background:white;
+    border-radius: 0.25em;
+    box-shadow: 0px 0px 3px gainsboro;
+    margin-bottom: 20px;
+    padding: .6em 1em 
+}
+.card-header {
+    font-family: geomanistregular !important;
+    color:#0a0a0a;
+    padding-left: 2em;
+    padding-top: 1em;
+}
+.circular{
+    border-radius: 100%
+}
+.desc {
+    margin: .5em 0 .5em;
+    font-size: 1em;
+    line-height: 1em;
+    padding-right: 0 !important;
+    color: rgba(0, 0, 0, 0.6) !important;
+    font-family: averta, Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+}
+.followers{
+    font-family: averta-light !important;
+    font-size: 28px !important;
+}

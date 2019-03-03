@@ -2,17 +2,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
+import { InfluencerData } from './app.component';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
+const uri = 'http://localhost:4000/graphql'
 @NgModule({
   declarations: [
-    AppComponent
+    InfluencerData
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    GraphQLModule,
+    HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [InfluencerData]
 })
 export class AppModule { }

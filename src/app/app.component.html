@@ -1,23 +1,35 @@
-<div style="text-align:center">
-  <div>
-    <h1>
-      {{ title }}!
-    </h1>
-    <img width="300" alt="Angular Logo"
-      src="https://www.affable.ai/wp-content/uploads/2018/06/affable-logo-with-text.png">
+<div class="container-fluid bggrey">
+  <div *ngIf="loading">
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
   </div>
-  <h2>Here are some links to help you start: </h2>
-  <ul>
-    <li>
-      <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-    </li>
-    <li>
-      <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-    </li>
-    <li>
-      <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-    </li>
-  </ul>
+  <div *ngIf="error">
+    Error :(
+  </div>
+  <div class="pbu-20-plr-30 contain" *ngIf="influencers">
+    <div *ngFor="let inf of influencers">
+      <div class="row white-card">
+        <img src="{{inf.picture}}" class="col-3 circular" onerror="this.src='http://health.fiu.edu/_assets/images/providers/headshot-placeholder.png'" height='133px' width='150px'>
+        <div class="col-6">
+          <strong>{{inf.fullName}} - @{{inf.username}}</strong>
+          <div class="desc text-justify">
+            <a>
+              {{inf.biography}}
+            </a>
+          </div>
+        </div>
+        <div class="col-3 text-center">
+            <p class="mt-5 followers"><strong >{{abbrNum(inf.followerCount,2)}}</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+
 
 <router-outlet></router-outlet>
