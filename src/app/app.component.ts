@@ -12,26 +12,73 @@ export class InfluencerData implements OnInit {
   influencers: any[];
   loading = true;
   error: any;
+  count=10;
 
   constructor(private apollo: Apollo) { }
 
-  
-  ngOnInit() {
+  loadMore(id){
     this.apollo
       .watchQuery({
         query: gql`
-          {
-            allInfluencers(first:10 orderBy:followerCount_ASC){
+          query get_influencers($count:Int $id:String ){
+            allInfluencers(first:$count after:$id orderBy:followerCount_DESC){
               id
               username
               followerCount
               picture
               biography
               fullName
+              stats{
+                followerCount
+                interests
+                engagement{
+                  avgCommentsRatio
+                  avgLikesRatio
+                }
+              }
             }
 
             }
         `,
+        variables:{
+          count:this.count,
+          id:id
+        }
+      })
+      .valueChanges.subscribe(result => {
+          this.influencers = this.influencers.concat(result.data && (result.data as any).allInfluencers);
+          this.loading = result.loading;
+          this.error = (result as any).error;
+        
+      });
+  }
+  ngOnInit() {
+    this.apollo
+      .watchQuery({
+        query: gql`
+          query get_influencers($count:Int){
+            allInfluencers(first:$count orderBy:followerCount_DESC){
+              id
+              username
+              followerCount
+              picture
+              biography
+              fullName
+              stats{
+                followerCount
+                interests
+                engagement{
+                  avgCommentsRatio
+                  avgLikesRatio
+                }
+              }
+            }
+
+            }
+        `,
+        variables:{
+          count:this.count
+        }
       })
       .valueChanges.subscribe(result => {
        
@@ -40,6 +87,14 @@ export class InfluencerData implements OnInit {
           this.error = (result as any).error;
         
       });
+  }
+  onScroll(event) {
+    let elementHeight = event.target.scrollTopMax;
+   let scrollPosition = event.target.scrollTop;
+   if( elementHeight - scrollPosition < 100) {
+       //add Content 
+       console.log("kjskamd")
+   }
   }
   abbrNum(number, decPlaces) {
     // 2 decimal places => 100, 3 => 1000, etc

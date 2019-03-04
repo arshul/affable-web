@@ -1,4 +1,4 @@
-<div class="container-fluid bggrey">
+<div class="container-fluid bggrey" (window:scroll)="onScroll($event)">
   <div *ngIf="loading">
     <div class="d-flex justify-content-center">
       <div class="spinner-border" role="status">
@@ -20,12 +20,17 @@
               {{inf.biography}}
             </a>
           </div>
+          
         </div>
         <div class="col-3 text-center">
             <p class="mt-5 followers"><strong >{{abbrNum(inf.followerCount,2)}}</strong></p>
         </div>
+        <div class="col-6 offset-3" >
+          <span class="badge badge-primary mx-1" *ngFor="let tag of inf.stats.interests"> {{tag}} </span>&nbsp;
+        </div>
       </div>
     </div>
+    <div id="end" class="text-center" (click)="loadMore(influencers[influencers.length-1].id)"><button>Load more</button></div>
   </div>
 </div>
 
