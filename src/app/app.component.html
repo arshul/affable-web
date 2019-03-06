@@ -1,6 +1,6 @@
 <div class="container-fluid bggrey" >
-  <div class="text-center" (click)="reset()">
-    <img src="https://www.affable.ai/wp-content/uploads/2018/06/affable-logo-with-text.png">
+  <div class="text-center" title="click here to reset" (click)="reset()">
+    <a href="#"><img src="https://www.affable.ai/wp-content/uploads/2018/06/affable-logo-with-text.png"></a>
   </div>
   <div *ngIf="loading">
     <div class="d-flex justify-content-center">
@@ -26,11 +26,11 @@
           </button>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <h6 class="dropdown-header">On Followers</h6>
+            <a class="dropdown-item" href="#" (click)="sort(true)">Ascending <i *ngIf="orderAsc" class="fas fa-check"></i></a>
+            <a class="dropdown-item" href="#" (click)="sort(false)">Descending <i *ngIf="!orderAsc" class="fas fa-check"></i></a>
+            <!-- <h6 class="dropdown-header">On like Engagment</h6>
             <a class="dropdown-item" href="#">Ascending</a>
-            <a class="dropdown-item" href="#">Descending</a>
-            <h6 class="dropdown-header">On like Engagment</h6>
-            <a class="dropdown-item" href="#">Ascending</a>
-            <a class="dropdown-item" href="#">Descending</a>
+            <a class="dropdown-item" href="#">Descending</a> -->
           </div>
         </div>
     </div>
@@ -47,7 +47,9 @@
           
         </div>
         <div class="col-3 text-center">
-            <p class="mt-5 followers"><strong >{{abbrNum(inf.followerCount,2)}}</strong></p>
+            <p class="mt-5 followers"><strong title="Followers">{{abbrNum(inf.followerCount,2)}}</strong></p>
+            <span title="Likes Ratio" class="badge badge-pill badge-secondary">{{inf.stats.engagement.avgLikesRatio}}</span>
+            <span  title = "Comments Ratio" class="badge badge-pill badge-secondary">{{inf.stats.engagement.avgCommentsRatio}}</span>
         </div>
         <div *ngIf="inf.stats" class="col-6 offset-3" >
           <span class="badge badge-primary mx-1" *ngFor="let tag of inf.stats.interests"> {{tag}} </span>&nbsp;

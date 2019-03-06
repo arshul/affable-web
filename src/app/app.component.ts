@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 
-const GET_INF_QUERY = gql`query get_influencers($count:Int $id:String $bio:String){
+const GET_INF_QUERY = gql`query get_influencers($count:Int $id:String $bio:String $orderBy:InfluencerOrderBy){
   allInfluencers(
     first:$count 
     after:$id 
-    orderBy:followerCount_DESC
+    orderBy:$orderBy
     filter:{
       biography_contains:$bio
     }
@@ -39,6 +39,7 @@ export class InfluencerData implements OnInit {
   error: any;
   count = 10;
   searching=false;
+  orderAsc=false;
   constructor(private apollo: Apollo) { }
   search(e){
     this.searching=true;
@@ -61,12 +62,13 @@ export class InfluencerData implements OnInit {
     }
   }
   reset(){
-    document.getElementById('searchInput').value = ''
+    (document.getElementById('searchInput') as any).value = ''
     this.apollo
       .watchQuery({
         query: GET_INF_QUERY,
         variables: {
           count: 10,
+          orderBy:this.orderAsc? 'followerCount_ASC' : 'followerCount_DESC'
         }
       })
       .valueChanges.subscribe(result => {
@@ -82,7 +84,8 @@ export class InfluencerData implements OnInit {
         query: GET_INF_QUERY,
         variables: {
           count: this.count,
-          id: id
+          id: id,
+          orderBy:this.orderAsc? 'followerCount_ASC' : 'followerCount_DESC'
         }
       })
       .valueChanges.subscribe(result => {
@@ -91,12 +94,31 @@ export class InfluencerData implements OnInit {
         this.error = (result as any).error;
       });
   }
+  sort(orderAsc){
+    this.orderAsc =  orderAsc
+    this.apollo
+      .watchQuery({
+        query: GET_INF_QUERY,
+        variables: {
+          count: this.count,
+          orderBy:this.orderAsc? 'followerCount_ASC' : 'followerCount_DESC'
+        }
+      })
+      .valueChanges.subscribe(result => {
+
+        this.influencers = result.data && (result.data as any).allInfluencers;
+        this.loading = result.loading;
+        this.error = (result as any).error;
+
+      });
+  }
   ngOnInit() {
     this.apollo
       .watchQuery({
         query: GET_INF_QUERY,
         variables: {
           count: this.count,
+          orderBy:this.orderAsc? 'followerCount_ASC' : 'followerCount_DESC'
         }
       })
       .valueChanges.subscribe(result => {
